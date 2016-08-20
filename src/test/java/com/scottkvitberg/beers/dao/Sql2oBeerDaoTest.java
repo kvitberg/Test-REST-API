@@ -16,6 +16,8 @@ public class Sql2oBeerDaoTest {
 
     private Sql2oBeerDao dao;
     private Connection conn;
+    private String testParam1 = "Test";
+    private String testParam2 = "http://www.test.com";
 
     @Before
     public void setUp() throws Exception {
@@ -36,7 +38,7 @@ public class Sql2oBeerDaoTest {
 
     @Test
     public void addingBeerSetId() throws Exception {
-        Beer beer = new Beer("Test", "http://www.test.com");
+        Beer beer = new Beer(testParam1, testParam2);
         int originalBeerId = beer.getId();
 
         dao.add(beer);
@@ -45,7 +47,7 @@ public class Sql2oBeerDaoTest {
 
     @Test
     public void addedBeersAreReturnedFromFindAll() throws Exception {
-        Beer beer = new Beer("Test", "http://www.test.com");
+        Beer beer = new Beer(testParam1, testParam2);
         dao.add(beer);
 
         assertEquals(1, dao.findAll().size());
@@ -55,5 +57,14 @@ public class Sql2oBeerDaoTest {
     public void noBeersReturnEmptyList() throws Exception {
         assertEquals(0, dao.findAll().size());
 
+    }
+
+    @Test
+    public void excisingBeersCanBeFoundById() throws Exception {
+        Beer beer = new Beer(testParam1, testParam2);
+        dao.add(beer);
+
+        Beer foundBeer = dao.findById(beer.getId());
+        assertEquals(beer, foundBeer);
     }
 }

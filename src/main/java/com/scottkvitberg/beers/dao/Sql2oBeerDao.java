@@ -41,4 +41,15 @@ public class Sql2oBeerDao implements BeerDao {
             return con.createQuery("SELECT * FROM beers").executeAndFetch(Beer.class);
         }
     }
+
+    @Override
+    public Beer findById(int id) {
+        try (Connection con = sql2o.open()){
+            return con.createQuery("SELECT * from beers WHERE id = :id")
+                    .addParameter("id", id)
+                    .executeAndFetchFirst(Beer.class);
+
+        }
+
+    }
 }

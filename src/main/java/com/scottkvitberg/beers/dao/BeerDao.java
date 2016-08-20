@@ -12,4 +12,7 @@ public interface BeerDao {
     void add(Beer beer) throws DaoException;
 
     List<Beer> findAll();
+
+    Beer findById(int id);
+
 }
