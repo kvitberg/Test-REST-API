@@ -18,11 +18,13 @@ public class Api {
         if (args.length > 0){
             if(args.length != 2){
                 System.out.println("Java API - required args: <port> <datasource>");
+                System.exit(0);
             }
             port(Integer.parseInt(args[0]));
             datasource = args[1];
         }
-        Sql2o sql2o = new Sql2o("INIT=RUNSCRIPT from 'classpath:db/init.sql'", "", "");
+        Sql2o sql2o = new Sql2o(
+                String.format("%sINIT=RUNSCRIPT from 'classpath:db/init.sql'", datasource, "", ""));
         BeerDao beerDao = new Sql2oBeerDao(sql2o);
         Gson gson = new Gson();
 
